@@ -6,7 +6,7 @@ import '../styles/Home.css';
 export default function Home() {
   const navigate = useNavigate();
   const clickCount = useRef(0);
-  const timer = useRef(null);
+  const timer = useRef<number | null>(null);
 
   // Fonction de déclenchement secret (3 clics rapides)
   const handleSecretAdminAccess = () => {
