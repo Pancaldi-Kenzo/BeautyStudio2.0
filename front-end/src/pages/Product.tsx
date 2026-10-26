@@ -17,7 +17,7 @@ export default function Products() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Appel vers ton backend Express pour les produits
+    // Appel vers le backend Express pour les produits
     axios.get('http://localhost:5000/api/products')
       .then((response) => {
         setProducts(response.data);
