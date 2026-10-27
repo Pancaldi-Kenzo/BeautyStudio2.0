@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useCart } from '../context/useCart';
 import '../styles/ProductDetail.css';
 
 interface ProductDetailType {
@@ -15,6 +16,7 @@ interface ProductDetailType {
 export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { addToCart } = useCart();
   
   const [product, setProduct] = useState<ProductDetailType | null>(null);
   const [loading, setLoading] = useState(true);
@@ -80,7 +82,19 @@ export default function ProductDetail() {
               </ul>
             </div>
           )}
-          <button className="detail-add-btn">AJOUTER</button>
+
+          <button 
+            onClick={() => addToCart({
+              id: `prod-${product.id}`,
+              name: product.name,
+              price: product.price,
+              image_url: product.image_url
+            })}
+            className="detail-add-btn"
+          >
+            AJOUTER
+          </button>
+          
           <button className="detail-back-btn" onClick={() => navigate(-1)}>RETOUR</button>
         </div>
       </div>

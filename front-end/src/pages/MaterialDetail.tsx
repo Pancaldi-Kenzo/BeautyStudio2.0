@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../styles/ProductDetail.css';
+import { useCart } from '../context/useCart';
+import '../styles/ProductDetail.css'; // On réutilise le même style propre
 
 interface MaterialDetailType {
   id: number;
@@ -15,6 +16,7 @@ interface MaterialDetailType {
 export default function MaterialDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { addToCart } = useCart();
   
   const [material, setMaterial] = useState<MaterialDetailType | null>(null);
   const [loading, setLoading] = useState(true);
@@ -80,7 +82,19 @@ export default function MaterialDetail() {
               </ul>
             </div>
           )}
-          <button className="detail-add-btn">AJOUTER</button>
+
+          <button 
+            onClick={() => addToCart({
+              id: `mat-${material.id}`, // Format d'ID spécifique au matériel dans le panier
+              name: material.name,
+              price: material.price,
+              image_url: material.image_url
+            })}
+            className="detail-add-btn"
+          >
+            AJOUTER
+          </button>
+          
           <button className="detail-back-btn" onClick={() => navigate(-1)}>RETOUR</button>
         </div>
       </div>

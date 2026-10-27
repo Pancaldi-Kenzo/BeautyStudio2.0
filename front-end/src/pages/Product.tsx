@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../styles/product.css';
+import '../styles/Product.css';
+import { useCart } from '../context/useCart'; // Import du contexte panier
 
 interface ProductItem {
   id: number;
@@ -15,9 +16,10 @@ export default function Products() {
   const navigate = useNavigate();
   const [products, setProducts] = useState<ProductItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const { addToCart } = useCart();
 
   useEffect(() => {
-    // Appel vers le backend Express pour les produits
+    // Appel vers ton backend Express pour les produits
     axios.get('http://localhost:5000/api/products')
       .then((response) => {
         setProducts(response.data);
@@ -75,7 +77,7 @@ export default function Products() {
                       : item.description}
                   </p>
                   <span className="product-price">{item.price}€</span>
-                  <button className="order-btn"> Commander </button>
+                  <button className="order-btn" onClick={() => addToCart({ ...item, id: `prod-${item.id}` })}> Commander </button>
                 </div>
               ))}
             </div>
