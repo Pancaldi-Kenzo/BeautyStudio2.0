@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/product.css'; // On utilise directement le même fichier CSS que les produits
+import { useCart } from '../context/useCart';
 
 interface MaterialItem {
   id: number;
@@ -15,6 +16,7 @@ export default function Material() {
   const navigate = useNavigate();
   const [materials, setMaterials] = useState<MaterialItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/materials')
@@ -74,7 +76,7 @@ export default function Material() {
                       : item.description}
                   </p>
                   <span className="product-price">{item.price}€</span>
-                  <button className="order-btn"> Commander </button>
+                  <button className="order-btn" onClick={() => addToCart({ ...item, id: `mat-${item.id}` })}> Commander </button>
                 </div>
               ))}
             </div>
