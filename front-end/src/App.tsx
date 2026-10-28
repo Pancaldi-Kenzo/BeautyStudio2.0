@@ -7,6 +7,8 @@ import MaterialDetail from './pages/MaterialDetail';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import AdminLogin from './pages/admin/Adminlogin';
+import AdminLayout from './pages/admin/Adminlayout';
+import ProtectedRoute from './pages/admin/ProtectedRoute';
 
 export default function App() {
   return (
@@ -22,6 +24,9 @@ export default function App() {
 
         {/* Routes Connexion Admin */}
         <Route path="/login" element={<AdminLogin />} />
+         <Route element={<ProtectedRoute />}>
+          <Route path="/admin/*" element={<AdminLayout />} />
+        </Route>
       </Routes>
     </CartProvider>  
   );
