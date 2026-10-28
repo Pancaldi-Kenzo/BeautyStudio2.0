@@ -6,6 +6,7 @@ import Material from './pages/Material';
 import MaterialDetail from './pages/MaterialDetail';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
+import AdminLogin from './pages/admin/Adminlogin';
 
 export default function App() {
   return (
@@ -18,6 +19,9 @@ export default function App() {
         <Route path="/materiel/:id" element={<MaterialDetail />} />
         <Route path="/produit/:id" element={<ProductDetail />} />
         <Route path="/panier" element={<Cart />} />
+
+        {/* Routes Connexion Admin */}
+        <Route path="/login" element={<AdminLogin />} />
       </Routes>
     </CartProvider>  
   );
