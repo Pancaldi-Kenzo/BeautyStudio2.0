@@ -1,3 +1,5 @@
+/* src/styles/admin/AdminLogin.css */
+
 .admin-login-container {
   display: flex;
   justify-content: center;
@@ -15,7 +17,6 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   width: 350px;
   box-sizing: border-box;
-  margin: 220px;
 }
 
 .admin-login-form h2 {
