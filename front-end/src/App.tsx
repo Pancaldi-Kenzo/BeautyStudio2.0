@@ -9,6 +9,7 @@ import Cart from './pages/Cart';
 import AdminLogin from './pages/admin/Adminlogin';
 import AdminLayout from './pages/admin/Adminlayout';
 import ProtectedRoute from './pages/admin/ProtectedRoute';
+import Admindashboard from './pages/admin/Admindashboard';
 
 export default function App() {
   return (
@@ -24,9 +25,15 @@ export default function App() {
 
         {/* Routes Connexion Admin */}
         <Route path="/login" element={<AdminLogin />} />
+
+        {/* Routes Admin protégées */}
          <Route element={<ProtectedRoute />}>
           <Route path="/admin/*" element={<AdminLayout />} />
+          <Route index element={<Admindashboard />} />
         </Route>
+
+        {/* Redirection pour les routes non définies */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </CartProvider>  
   );
