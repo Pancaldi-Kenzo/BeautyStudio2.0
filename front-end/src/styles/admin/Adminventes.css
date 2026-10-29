@@ -1,0 +1,97 @@
+/* Page Admin Ventes */
+.ventes-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 📦 Section Résumé Fournisseur (Styles remplaçant le style inline) */
+.supplier-box {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.supplier-box-title {
+  color: #c59b67;
+}
+
+.supplier-empty-text {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+}
+
+.supplier-table-container {
+  overflow-x: auto;
+}
+
+.supplier-table-header-row {
+  border-bottom: 2px solid #eee;
+}
+
+.supplier-table-body-row {
+  border-bottom: 1px solid #f9f9f9;
+}
+
+.supplier-qty-cell {
+  font-weight: bold;
+  color: #c59b67;
+}
+
+/* États de chargement et vides */
+.ventes-loading,
+.ventes-empty {
+  color: #666;
+  font-size: 15px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+/* Conteneur du tableau des ventes */
+.orders-table-container {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  overflow: hidden;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th, 
+.admin-table td {
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.admin-table th {
+  background-color: #f4ebd0;
+  color: #555;
+  font-weight: bold;
+}
+
+.admin-table tr:hover {
+  background-color: #fdfbf7;
+}
+
+.order-items-list-mini {
+  margin: 0;
+  padding-left: 15px;
+  font-size: 13px;
+  color: #555;
+}
+
+.order-total-amount {
+  font-weight: bold;
+  color: #333;
+}

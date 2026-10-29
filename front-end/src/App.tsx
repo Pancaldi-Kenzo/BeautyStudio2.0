@@ -10,6 +10,7 @@ import AdminLogin from './pages/admin/Adminlogin';
 import AdminLayout from './pages/admin/Adminlayout';
 import ProtectedRoute from './pages/admin/ProtectedRoute';
 import Admindashboard from './pages/admin/Admindashboard';
+import AdminVentes from './pages/admin/AdminVentes';
 
 export default function App() {
   return (
@@ -28,8 +29,10 @@ export default function App() {
 
         {/* Routes Admin protégées */}
          <Route element={<ProtectedRoute />}>
-          <Route path="/admin/*" element={<AdminLayout />} />
-          <Route index element={<Admindashboard />} />
+          <Route path="/admin/*" element={<AdminLayout />}>
+            <Route index element={<Admindashboard />} />
+            <Route path="ventes" element={<AdminVentes />} />
+          </Route>
         </Route>
 
         {/* Redirection pour les routes non définies */}
