@@ -6,7 +6,7 @@ import { supabase } from '../config/supabase.js';
 export const adminLogin = async (req: Request, res: Response) => {
   try {
     const { password } = req.body;
-
+console.log("Tentative de connexion avec le mot de passe :", JSON.stringify(password));
     const { data, error } = await supabase
       .from('beauty_settings')
       .select('admin_password')

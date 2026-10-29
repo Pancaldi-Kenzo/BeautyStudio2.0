@@ -11,6 +11,7 @@ import AdminLayout from './pages/admin/Adminlayout';
 import ProtectedRoute from './pages/admin/ProtectedRoute';
 import Admindashboard from './pages/admin/Admindashboard';
 import AdminVentes from './pages/admin/AdminVentes';
+import AdminStocks from './pages/admin/AdminStocks';
 
 export default function App() {
   return (
@@ -32,6 +33,7 @@ export default function App() {
           <Route path="/admin/*" element={<AdminLayout />}>
             <Route index element={<Admindashboard />} />
             <Route path="ventes" element={<AdminVentes />} />
+            <Route path="stocks" element={<AdminStocks />} />
           </Route>
         </Route>
 
