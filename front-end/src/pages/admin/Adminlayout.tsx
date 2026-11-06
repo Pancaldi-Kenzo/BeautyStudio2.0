@@ -18,21 +18,21 @@ export default function AdminLayout() {
   };
 
   return (
-    <div className="admin-container container-fluid p-0">
-      {/* Barre de navigation mobile avec menu burger aux couleurs du site */}
-      <div className="admin-mobile-header d-md-none p-3 d-flex justify-content-between align-items-center">
-        <span className="fw-bold">Beauty Studio - Gérant</span>
+    <div className="admin-container">
+      {/* Barre de navigation mobile avec menu burger */}
+      <div className="admin-mobile-header">
+        <span className="admin-mobile-title">Beauty Studio - Gérant</span>
         <button 
-          className="btn btn-outline-light btn-sm"
+          className="admin-burger-btn"
           onClick={() => setSidebarOpen(!sidebarOpen)}
         >
           {sidebarOpen ? '✕ Fermer' : '☰ Menu'}
         </button>
       </div>
 
-      <div className="row g-0 m-0 w-100">
-        {/* Barre latérale (Responsive : cachée sur mobile sauf si activée) */}
-        <aside className={`admin-sidebar admin-sidebar-flex col-12 col-md-3 col-lg-2 p-0 ${sidebarOpen ? 'd-flex' : 'd-none d-md-flex'}`}>
+      <div className="admin-layout-wrapper">
+        {/* Barre latérale (Sidebar) */}
+        <aside className={`admin-sidebar ${sidebarOpen ? 'open' : ''}`}>
           <div>
             <div className="admin-logo-circle">
               <span className="admin-logo-title">Beauty Studio</span>
@@ -85,7 +85,7 @@ export default function AdminLayout() {
         </aside>
 
         {/* Zone de contenu principale */}
-        <main className="admin-main-content col-12 col-md-9 col-lg-10 p-4">
+        <main className="admin-main-content">
           <Outlet />
         </main>
       </div>

@@ -21,7 +21,8 @@ export const getOrders = async (req: Request, res: Response) => {
 export const createOrder = async (req: Request, res: Response) => {
   try {
     // On récupère aussi le code promo optionnel envoyé par le frontend
-    const { items, promoCode } = req.body;
+    const { items, promo_code, promoCode } = req.body;
+    const activePromo= promo_code || promoCode;
 
     if (!items || items.length === 0) {
       return res.status(400).json({ error: "Le panier est vide." });
@@ -32,7 +33,7 @@ export const createOrder = async (req: Request, res: Response) => {
     let discountAmount = 0;
 
     // 2. Si un code promo est fourni, on le vérifie de manière sécurisée côté backend dans 'beauty_settings'
-    if (promoCode && promoCode.trim() !== "") {
+    if (activePromo && activePromo.trim() !== "") {
       const { data: settingsData, error: settingsError } = await supabase
         .from('beauty_settings')
         .select('promo_code')
@@ -46,7 +47,7 @@ export const createOrder = async (req: Request, res: Response) => {
 
         if (Array.isArray(promoList)) {
           const found = promoList.find(
-            (p: any) => p.code.trim().toUpperCase() === promoCode.trim().toUpperCase()
+            (p: any) => p.code.trim().toUpperCase() === activePromo.trim().toUpperCase()
           );
 
           if (found) {

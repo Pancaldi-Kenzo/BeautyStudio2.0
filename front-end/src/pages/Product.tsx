@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/Product.css';
-import { useCart } from '../context/useCart'; // Import du contexte panier
+import { useCart } from '../context/useCart';
 
 interface ProductItem {
   id: number;
@@ -16,10 +16,10 @@ export default function Products() {
   const navigate = useNavigate();
   const [products, setProducts] = useState<ProductItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // État pour le menu burger
   const { addToCart } = useCart();
 
   useEffect(() => {
-    // Appel vers ton backend Express pour les produits
     axios.get('http://localhost:5000/api/products')
       .then((response) => {
         setProducts(response.data);
@@ -34,6 +34,11 @@ export default function Products() {
   return (
     <div className="shop-container">
       <header className="shop-header">
+        {/* Bouton Burger visible uniquement sur mobile */}
+        <button className="burger-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          ☰
+        </button>
+
         <div className="logo-circle">
           <span className="logo-title">Beauty Studio</span>
           <span className="logo-subtitle">Coiffure</span>
@@ -41,7 +46,8 @@ export default function Products() {
       </header>
 
       <div className="shop-body">
-        <div className="sidebar-buttons">
+        {/* Barre latérale (sur PC) / Menu Burger déroulant (sur Mobile) */}
+        <div className={`sidebar-buttons ${isMenuOpen ? 'open' : ''}`}>
           <button className="side-btn" onClick={() => navigate('/produits')}>Produits</button>
           <button className="side-btn" onClick={() => navigate('/materiel')}>Matériel</button>
           <button className="side-btn" onClick={() => navigate('/')}>Accueil</button>

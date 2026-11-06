@@ -1,10 +1,65 @@
+/* Conteneur global admin */
 .admin-container {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
   background-color: #f9f9f9;
   font-family: Arial, sans-serif;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
+/* En-tête mobile avec menu burger (masqué par défaut sur PC) */
+.admin-mobile-header {
+  display: none;
+  background: linear-gradient(135deg, #c59b67 0%, #a47c48 100%);
+  color: #fff;
+  padding: 15px 20px;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.admin-mobile-title {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.admin-burger-btn {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.admin-burger-btn:hover {
+  background-color: #f4ebd0;
+  color: #333;
+  border-color: #f4ebd0;
+}
+
+/* Wrapper principal (Sidebar + Contenu côte à côte sur PC) */
+.admin-layout-wrapper {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Sidebar PC */
 .admin-sidebar {
   width: 260px;
   background: linear-gradient(135deg, #c59b67 0%, #a47c48 100%);
@@ -14,6 +69,7 @@
   padding: 30px 20px;
   box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
+  flex-shrink: 0;
   min-height: 100vh;
 }
 
@@ -29,7 +85,7 @@
   justify-content: center;
   text-align: center;
   box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin: 0 auto 40px auto; /* Centré horizontalement */
+  margin: 0 auto 40px auto;
 }
 
 .admin-logo-title {
@@ -80,12 +136,13 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Section du bas de la sidebar (Accueil & Déconnexion) */
+/* Section du bas de la sidebar */
 .admin-sidebar-bottom {
   display: flex;
   flex-direction: column;
   gap: 10px;
   width: 100%;
+  margin-top: 20px;
 }
 
 .admin-btn-client {
@@ -106,71 +163,61 @@
   background-color: #c9302c !important;
 }
 
+/* Contenu principal (Garanti sans débordement) */
 .admin-main-content {
   flex: 1;
   padding: 40px;
-  overflow-y: auto;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   box-sizing: border-box;
 }
 
-.admin-page h2 {
-  color: #333;
-  margin-bottom: 25px;
-  font-size: 24px;
-  border-bottom: 2px solid #e2d2b5;
-  padding-bottom: 10px;
+/* ================================================= */
+/* MEDIA QUERY MOBILE (< 768px)                      */
+/* ================================================= */
+@media (max-width: 768px) {
+  .admin-mobile-header {
+    display: flex; /* Affiche l'en-tête mobile avec le bouton burger */
+  }
+
+  .admin-layout-wrapper {
+    flex-direction: column; /* Empile la sidebar (si ouverte) et le contenu */
+  }
+
+  /* La sidebar est masquée par défaut sur mobile et s'affiche en overlay propre */
+  .admin-sidebar {
+    display: none;
+    width: 100% !important;
+    max-width: 100%;
+    min-height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+  }
+
+  /* Classe activée lors du clic sur le menu burger */
+  .admin-sidebar.open {
+    display: flex;
+  }
+
+  .admin-main-content {
+    padding: 15px 10px; /* Marges réduites et sécurisées sur mobile */
+    width: 100%;
+    max-width: 100%;
+  }
 }
 
-.orders-table-container {
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
+.parametres-card {
+  max-width: 100% !important;
+  overflow: hidden !important;
 }
 
-.admin-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-}
-
-.admin-table th, 
-.admin-table td {
-  padding: 15px 20px;
-  border-bottom: 1px solid #eee;
-}
-
-.admin-table th {
-  background-color: #f4ebd0;
-  color: #555;
-  font-weight: bold;
-}
-
-.admin-table tr:hover {
-  background-color: #fdfbf7;
-}
-
-.order-items-list-mini {
-  margin: 0;
-  padding-left: 15px;
-  font-size: 13px;
-  color: #555;
-}
-
-/* MENU BURGER MOBILE */
-.admin-mobile-header {
-  background: linear-gradient(135deg, #c59b67 0%, #a47c48 100%) !important;
-  color: #fff;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.admin-mobile-header .btn-outline-light {
-  color: #fff;
-  border-color: #fff;
-}
-
-.admin-mobile-header .btn-outline-light:hover {
-  background-color: #f4ebd0;
-  color: #333;
-  border-color: #f4ebd0;
+.param-field input[type="password"] {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
 }

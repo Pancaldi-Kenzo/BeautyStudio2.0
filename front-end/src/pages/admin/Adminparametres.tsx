@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../../styles/admin/AdminParametres.css';
+import '../../styles/admin/Adminparametres.css';
 
 interface PromoCode {
   code: string;
@@ -10,7 +10,6 @@ interface PromoCode {
 export default function AdminParametres() {
   const [adminPassword, setAdminPassword] = useState('');
   
-  // Gestion de la liste des codes promo
   const [promoCodes, setPromoCodes] = useState<PromoCode[]>([]);
   const [newCodeName, setNewCodeName] = useState('');
   const [newCodeDiscount, setNewCodeDiscount] = useState('');
@@ -18,7 +17,6 @@ export default function AdminParametres() {
   const [successMsg, setSuccessMsg] = useState('');
   const [loading, setLoading] = useState(true);
 
-  // Charger les paramètres depuis le backend au démarrage
   useEffect(() => {
     axios.get('http://localhost:5000/api/settings')
       .then((res) => {
@@ -52,7 +50,6 @@ export default function AdminParametres() {
       });
   }, []);
 
-  // Ajouter un code promo à la liste locale
   const handleAddPromo = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newCodeName.trim() || !newCodeDiscount) return;
@@ -68,16 +65,14 @@ export default function AdminParametres() {
     setNewCodeDiscount('');
   };
 
-  // Supprimer un code promo de la liste locale
   const handleRemovePromo = (indexToRemove: number) => {
     setPromoCodes(promoCodes.filter((_, index) => index !== indexToRemove));
   };
 
-  // Sauvegarder les modifications via l'API
   const handleSave = () => {
     axios.put('http://localhost:5000/api/settings', {
       admin_password: adminPassword,
-      promo_code: promoCodes // Envoi du tableau complet vers le champ JSONB Supabase
+      promo_code: promoCodes
     })
     .then(() => {
       setSuccessMsg('Paramètres enregistrés avec succès dans la base de données !');
@@ -91,14 +86,14 @@ export default function AdminParametres() {
 
   if (loading) {
     return (
-      <div className="admin-page admin-parametres-page">
+      <div className="admin-parametres-page">
         <p>Chargement des paramètres...</p>
       </div>
     );
   }
 
   return (
-    <div className="admin-page admin-parametres-page container-fluid py-4">
+    <div className="admin-parametres-page">
       <h2 className="parametres-title">Paramètres de l'application</h2>
 
       {successMsg && (
@@ -107,81 +102,76 @@ export default function AdminParametres() {
         </div>
       )}
 
-      {/* Grille Bootstrap pour l'alignement responsive */}
-      <div className="row g-4 parametres-grid">
+      {/* Grille Flexbox/Grid sans Bootstrap */}
+      <div className="parametres-grid">
         
         {/* 1. Sécurité */}
-        <div className="col-12 col-lg-6">
-          <div className="parametres-card h-100">
-            <div className="card-header">
-              <h3>Sécurité</h3>
-            </div>
-            <div className="card-body">
-              <div className="param-field">
-                <label>Mot de Passe Administrateur</label>
-                <input 
-                  type="password" 
-                  value={adminPassword} 
-                  onChange={(e) => setAdminPassword(e.target.value)} 
-                />
-              </div>
+        <div className="parametres-card">
+          <div className="card-header">
+            <h3>Sécurité</h3>
+          </div>
+          <div className="card-body">
+            <div className="param-field">
+              <label>Mot de Passe Administrateur</label>
+              <input 
+                type="password" 
+                value={adminPassword} 
+                onChange={(e) => setAdminPassword(e.target.value)} 
+              />
             </div>
           </div>
         </div>
 
         {/* 2. Codes Promo Dynamiques */}
-        <div className="col-12 col-lg-6">
-          <div className="parametres-card h-100">
-            <div className="card-header">
-              <h3>Codes Promo</h3>
-            </div>
-            <div className="card-body">
-              <form onSubmit={handleAddPromo} className="promo-add-row">
-                <input 
-                  type="text" 
-                  placeholder="Nom du code" 
-                  value={newCodeName} 
-                  onChange={(e) => setNewCodeName(e.target.value)} 
-                />
-                <input 
-                  type="number" 
-                  placeholder="%" 
-                  value={newCodeDiscount} 
-                  onChange={(e) => setNewCodeDiscount(e.target.value)} 
-                />
-                <button type="submit" className="btn-add-promo">Ajouter</button>
-              </form>
+        <div className="parametres-card">
+          <div className="card-header">
+            <h3>Codes Promo</h3>
+          </div>
+          <div className="card-body">
+            <form onSubmit={handleAddPromo} className="promo-add-row">
+              <input 
+                type="text" 
+                placeholder="Nom du code" 
+                value={newCodeName} 
+                onChange={(e) => setNewCodeName(e.target.value)} 
+              />
+              <input 
+                type="number" 
+                placeholder="%" 
+                value={newCodeDiscount} 
+                onChange={(e) => setNewCodeDiscount(e.target.value)} 
+              />
+              <button type="submit" className="btn-add-promo">Ajouter</button>
+            </form>
 
-              <ul className="promo-list">
-                {promoCodes.length === 0 ? (
-                  <p style={{ fontSize: '13px', color: '#666', textAlign: 'center' }}>Aucun code promo actif.</p>
-                ) : (
-                  promoCodes.map((item, index) => (
-                    <li key={index} className="promo-item">
-                      <span><strong>{item.discount}%</strong> - {item.code}</span>
-                      <button 
-                        type="button" 
-                        className="btn-delete-promo" 
-                        onClick={() => handleRemovePromo(index)}
-                      >
-                        Supprimer
-                      </button>
-                    </li>
-                  ))
-                )}
-              </ul>
-            </div>
+            <ul className="promo-list">
+              {promoCodes.length === 0 ? (
+                <p style={{ fontSize: '13px', color: '#666', textAlign: 'center' }}>Aucun code promo actif.</p>
+              ) : (
+                promoCodes.map((item, index) => (
+                  <li key={index} className="promo-item">
+                    <span><strong>{item.discount}%</strong> - {item.code}</span>
+                    <button 
+                      type="button" 
+                      className="btn-delete-promo" 
+                      onClick={() => handleRemovePromo(index)}
+                    >
+                      Supprimer
+                    </button>
+                  </li>
+                ))
+              )}
+            </ul>
           </div>
         </div>
 
       </div>
 
       {/* Bouton global d'enregistrement */}
-      <div className="mt-4 text-end">
+      <div style={{ marginTop: '25px' }}>
         <button 
           onClick={handleSave} 
-          className="btn-add-promo"
-          style={{ padding: '12px 25px', fontSize: '16px' }}
+          className="btn-save-settings"
         >
           Enregistrer tous les paramètres
         </button>
