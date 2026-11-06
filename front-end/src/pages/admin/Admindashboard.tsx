@@ -36,7 +36,7 @@ export default function AdminDashboard() {
   }, []);
 
   return (
-    <div className="container-fluid py-4">
+    <div className="container-fluid py-4 admin-dashboard-container">
       <h2 className="mb-4 fw-bold text-dark border-bottom pb-2">Tableau de Bord - Vue d'ensemble</h2>
 
       {/* Cartes de Statistiques Globales */}
@@ -44,7 +44,7 @@ export default function AdminDashboard() {
         <div className="col-12 col-md-6">
           <div className="card shadow-sm border-0 p-4 text-center h-100 bg-white">
             <h5 className="text-muted mb-2 fs-6">Chiffre d'Affaires Total</h5>
-            <p className="fs-3 fw-bold mb-0" style={{ color: '#c59b67' }}>
+            <p className="fs-3 fw-bold mb-0 revenue-text">
               {loading ? '...' : `${totalRevenue.toFixed(2)} €`}
             </p>
           </div>
@@ -75,7 +75,7 @@ export default function AdminDashboard() {
                 {topConsulted.map((item, index) => (
                   <li key={index} className="list-group-item d-flex justify-content-between align-items-center px-0 bg-transparent">
                     <span className="text-dark">{index + 1}. {item.name}</span>
-                    <span className="badge bg-light text-dark border" style={{ color: '#c59b67' }}>
+                    <span className="badge bg-light text-dark border badge-custom">
                       {item.count} vues
                     </span>
                   </li>
@@ -96,9 +96,9 @@ export default function AdminDashboard() {
             ) : (
               <div className="d-flex flex-column gap-3">
                 {activities.map((act) => (
-                  <div key={act.id} className="border-bottom pb-2">
+                  <div key={act.id} className="border-bottom pb-2 activity-item-custom">
                     <p className="mb-1 text-dark small">{act.action_description}</p>
-                    <small className="text-muted d-block" style={{ fontSize: '11px' }}>
+                    <small className="text-muted d-block activity-date">
                       {new Date(act.created_at).toLocaleString()}
                     </small>
                   </div>

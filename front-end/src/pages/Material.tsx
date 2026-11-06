@@ -16,6 +16,7 @@ export default function Material() {
   const navigate = useNavigate();
   const [materials, setMaterials] = useState<MaterialItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // État pour gérer l'ouverture du menu burger
   const { addToCart } = useCart();
 
   useEffect(() => {
@@ -33,6 +34,11 @@ export default function Material() {
   return (
     <div className="shop-container">
       <header className="shop-header">
+        {/* Bouton Burger visible uniquement sur mobile */}
+        <button className="burger-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          ☰
+        </button>
+
         <div className="logo-circle">
           <span className="logo-title">Beauty Studio</span>
           <span className="logo-subtitle">Coiffure</span>
@@ -40,7 +46,8 @@ export default function Material() {
       </header>
 
       <div className="shop-body">
-        <div className="sidebar-buttons">
+        {/* La classe .open s'ajoute dynamiquement pour afficher le menu sur mobile */}
+        <div className={`sidebar-buttons ${isMenuOpen ? 'open' : ''}`}>
           <button className="side-btn" onClick={() => navigate('/produits')}>Produits</button>
           <button className="side-btn" onClick={() => navigate('/materiel')}>Matériel</button>
           <button className="side-btn" onClick={() => navigate('/')}>Accueil</button>
